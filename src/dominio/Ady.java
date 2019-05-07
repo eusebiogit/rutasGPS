@@ -1,5 +1,9 @@
 package dominio;
 
+/**
+ * Empaqueta 
+ * @author ordenador
+ */
 public class Ady {
 
     private long id;

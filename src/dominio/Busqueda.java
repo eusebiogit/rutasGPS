@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dominio;
 
 import java.util.Collections;
@@ -11,6 +6,7 @@ import java.util.Stack;
 import java.util.Vector;
 
 /**
+ * Clase abstracta con las operaciones más comunes a la búsqueda
  *
  * @author ordenador
  */
@@ -25,6 +21,11 @@ public abstract class Busqueda {
     protected int profundidad;
     protected Hashtable<Integer, Double> estados;
 
+    /**
+     *
+     * @param problema
+     * @param poda
+     */
     protected Busqueda(Problema problema, boolean poda) {
         this.problema = problema;
         frontera = new Frontera();
@@ -32,18 +33,37 @@ public abstract class Busqueda {
         this.poda = poda;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getComplejidadEspacial() {
         return complejidadEspacial;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getComplejidadTemporal() {
         return complejidadTemporal;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getCosto() {
         return costo;
     }
 
+    /**
+     * Si la poda está activada devolverá verdadero en caso de que la rama deba
+     * podarse
+     *
+     * @param n
+     * @return
+     */
     protected boolean poda(NodoBusqueda n) {
         boolean r = false;
         if (poda) {
@@ -62,6 +82,11 @@ public abstract class Busqueda {
         return r;
     }
 
+    /**
+     * Algoritmo general de búsqueda
+     *
+     * @return
+     */
     public Vector<Estado> buscar() {  //busqueda basica
         Vector<NodoBusqueda> LS = null;
 
@@ -94,9 +119,19 @@ public abstract class Busqueda {
         return solucion;
     }
 
+    /**
+     *
+     * @param LS
+     * @param actual
+     */
     protected abstract void creaListaNodosArbol(
             Vector<NodoBusqueda> LS, NodoBusqueda actual);
 
+    /**
+     *
+     * @param actual
+     * @return
+     */
     protected Vector<Estado> creaSolucion(NodoBusqueda actual) {
         costo = actual.getCosto();
         profundidad = actual.getProfundidad();
@@ -107,7 +142,6 @@ public abstract class Busqueda {
         while (aux != null) {
             pila.add(aux.getActual());
             aux = aux.getPadre();
-
         }
         while (!pila.empty()) {
             r.add(pila.pop());
@@ -115,6 +149,13 @@ public abstract class Busqueda {
         return r;
     }
 
+    /**
+     * Crea el tipo de búsqueda aplicada en función del problema seleccionado
+     *
+     * @param problema
+     * @param poda
+     * @return
+     */
     public static Busqueda getBusqueda(Problema problema, boolean poda) {
         Busqueda r = null;
         if (problema instanceof ProblemaCostoUniforme) {
@@ -132,6 +173,14 @@ public abstract class Busqueda {
         return r;
     }
 
+    /**
+     * Sobrecarga de getBusqueda en caso de que exista profundidad máxima
+     *
+     * @param problema
+     * @param profundidadMaxima
+     * @param poda
+     * @return
+     */
     public static Busqueda getBusqueda(Problema problema, int profundidadMaxima, boolean poda) {
         Busqueda r = null;
         if (problema instanceof ProblemaProfundidad) {
@@ -140,6 +189,15 @@ public abstract class Busqueda {
         return r;
     }
 
+    /**
+     * getBusqueda para profundidad iterativa
+     *
+     * @param problema
+     * @param profundidadMaxima
+     * @param iteracion
+     * @param poda
+     * @return
+     */
     public static Busqueda getBusqueda(Problema problema, int profundidadMaxima, int iteracion, boolean poda) {
         Busqueda r = null;
         if (problema instanceof ProblemaProfundidad) {
@@ -148,6 +206,10 @@ public abstract class Busqueda {
         return r;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "Complejidad Temporal: " + getComplejidadTemporal() + " s\n"

@@ -22,11 +22,10 @@ import persistencia.OperacionesPersistencia;
 /**
  * Se encarga de descargar de openstreetmap la información necesaria para
  * resolver el problema
- * 
+ *
  * @author ordenador
  */
 public class Acceso {
-    
 
     private static String dir = "https://www.openstreetmap.org/api/0.6/map?"
             + "bbox=";
@@ -34,7 +33,16 @@ public class Acceso {
     private URL url;
     private Document doc;
 
-    //Acceso al mapa para su descarga por las coordenadas
+    /**
+     * A partir de las Coordenadas proporcionadass se descarga la información
+     * del área, mediante la api de openstreemap y la guarda en un archivo
+     *
+     * @param coor
+     * @throws MalformedURLException
+     * @throws IOException
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     */
     public Acceso(Coordenadas coor) throws MalformedURLException, IOException, ParserConfigurationException, SAXException {
         url = new URL(dir + coor.getCoordenadasString());
         String contenidoArchivo;
@@ -50,7 +58,15 @@ public class Acceso {
         guardarDoc(contenidoArchivo, coor);
     }
 
-    //Acceso a la dirección en la que se encuentra un mapa ya descargado0
+    /**
+     * Si el mapa pedido ya ha sido descargado se accederá mediante archivo
+     *
+     * @param dir
+     * @throws FileNotFoundException
+     * @throws SAXException
+     * @throws IOException
+     * @throws ParserConfigurationException
+     */
     public Acceso(String dir) throws FileNotFoundException, SAXException, IOException, ParserConfigurationException {
         BufferedReader br = new BufferedReader(new FileReader(dir));
         InputSource archivo = new InputSource();
@@ -61,6 +77,15 @@ public class Acceso {
 
     }
 
+    /**
+     * Crea un archivo para en el que guarda la información de un área
+     * descargada
+     *
+     * @param archivo
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws IOException
+     */
     private void crearDoc(InputSource archivo) throws ParserConfigurationException, SAXException, IOException {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
@@ -68,15 +93,33 @@ public class Acceso {
         doc.getDocumentElement().normalize();
     }
 
+    /**
+     * Realiza el registro de la información descargada en un archivo en el
+     * direcctorio mapas
+     *
+     * @param contenido
+     * @param nombre
+     */
     private void guardarDoc(String contenido, Coordenadas nombre) {
         OperacionesPersistencia.guardarenFichero("mapas/" + nombre.getCoordenadasString() + ".osm", contenido);
-
     }
 
+    /**
+     * get de la información en formato Document
+     *
+     * @return
+     */
     public Document getDocumento() {
         return doc;
     }
 
+    /**
+     * Lectura de archivo en formato br
+     *
+     * @param br
+     * @return
+     * @throws IOException
+     */
     public String leerBR(BufferedReader br) throws IOException {
         String res = "";
         String entrada;
@@ -87,7 +130,6 @@ public class Acceso {
             br.close();
         } catch (Exception ex) {
         }
-
         return res;
     }
 }
