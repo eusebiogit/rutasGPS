@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package rutasgps;
+import presentacion.InterfazUsuario;
 
 /**
  *
@@ -11,12 +12,15 @@ package rutasgps;
  */
 public class RutasGPS {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+
+    public static void main(String[] args) throws Exception {
         
+//        IfMain iu=new IfMain();
+//        iu.show();
+//    	
+    	InterfazUsuario iu = new InterfazUsuario();
+    	iu.menu2();
     }
     
 }
+
