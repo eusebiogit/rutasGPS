@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package persistencia;
 
 import dominio.Estado;
@@ -13,14 +8,16 @@ import java.util.Date;
 import java.util.Vector;
 
 /**
- *
+ * Las operaciones necesarias que el sistema necesita para realizar la persistencia
  * @author ordenador
  */
 public class OperacionesPersistencia {
     
-    
-    
-    
+    /**
+     * 
+     * @param nombre
+     * @param contenido 
+     */
     public static void guardarenFichero(String nombre,String contenido){
         FileWriter fichero = null;
         PrintWriter pw = null;
@@ -44,6 +41,11 @@ public class OperacionesPersistencia {
             }
         }
     }
+    
+    /**
+     * El archivo gpx contiene la solución, la ruta
+     * @param solucion 
+     */
     public static void generarGPX(Vector<Estado> solucion ){
         java.util.Date fecha = new Date();
         String res="<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>"
@@ -66,7 +68,6 @@ public class OperacionesPersistencia {
         }
         res+="\t</trkseg>\t</trk></gpx>";
         guardarenFichero("rutas/ruta"+fecha+".gpx",res);
-        
     }
 }
 
