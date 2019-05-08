@@ -9,12 +9,13 @@ import java.util.Collections;
 import java.util.Vector;
 
 /**
+ * Particularización búsqueda voraz para resolver por costo uniforme
  *
  * @author ordenador
  */
-public class BusquedaCostoUniforme extends BusquedaVoraz{
+public class BusquedaCostoUniforme extends BusquedaVoraz {
 
-    protected BusquedaCostoUniforme(Problema problema,boolean poda) {
-        super(problema,poda);
+    protected BusquedaCostoUniforme(Problema problema, boolean poda) {
+        super(problema, poda);
     }
 }
