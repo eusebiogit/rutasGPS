@@ -28,6 +28,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 import persistencia.OperacionesPersistencia;
 
+/**
+ * @author ordenador
+ */
 public class InterfazUsuario {
 
     private int profundidad;
@@ -41,6 +44,13 @@ public class InterfazUsuario {
     private Vector<Long> destinos = null;
     private Busqueda busqueda;
 
+    /**
+     * 
+     * @throws IOException
+     * @throws MalformedURLException
+     * @throws ParserConfigurationException
+     * @throws SAXException 
+     */
     public void menu2() throws IOException, MalformedURLException, ParserConfigurationException, SAXException {
 
         double longitud1 = -2.14612;
@@ -60,14 +70,14 @@ public class InterfazUsuario {
 
         boolean poda = true;
 
-        // problema=new ProblemaAnchura(espacioDeEstados,posicionInicial,destinos);
+         problema=new ProblemaAnchura(espacioDeEstados,posicionInicial,destinos);
         //problema=new ProblemaCostoUniforme(espacioDeEstados,posicionInicial,destinos);
-        problema = new ProblemaProfundidad(espacioDeEstados, posicionInicial, destinos);
+        //problema = new ProblemaProfundidad(espacioDeEstados, posicionInicial, destinos);
         //problema=new ProblemaVoraz(espacioDeEstados,posicionInicial,destinos); //6
         // problema=new ProblemaA(espacioDeEstados,posicionInicial,destinos); //7
 
-        // busqueda=Busqueda.getBusqueda(problema,poda);
-        busqueda = Busqueda.getBusqueda(problema, profundidadMaxima, poda);  //profundidad acotada
+         busqueda=Busqueda.getBusqueda(problema,poda);
+        //busqueda = Busqueda.getBusqueda(problema, profundidadMaxima, poda);  //profundidad acotada
         //busqueda=Busqueda.getBusqueda(problema, profundidadMaxima, iteracion,poda);  //profundidad iterativa
 
         Vector<Estado> solucion = busqueda.buscar();
